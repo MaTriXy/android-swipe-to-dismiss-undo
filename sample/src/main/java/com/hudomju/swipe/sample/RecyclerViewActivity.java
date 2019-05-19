@@ -22,6 +22,8 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class RecyclerViewActivity extends Activity {
 
+    private static final int TIME_TO_AUTOMATICALLY_DISMISS_ITEM = 3000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +46,16 @@ public class RecyclerViewActivity extends Activity {
                             }
 
                             @Override
+                            public void onPendingDismiss(RecyclerViewAdapter recyclerView, int position) {
+
+                            }
+
+                            @Override
                             public void onDismiss(RecyclerViewAdapter view, int position) {
                                 adapter.remove(position);
                             }
                         });
-
+        touchListener.setDismissDelay(TIME_TO_AUTOMATICALLY_DISMISS_ITEM);
         recyclerView.setOnTouchListener(touchListener);
         // Setting this scroll listener is required to ensure that during ListView scrolling,
         // we don't look for swipes.
@@ -105,7 +112,7 @@ public class RecyclerViewActivity extends Activity {
             TextView dataTextView;
             MyViewHolder(View view) {
                 super(view);
-                dataTextView = ((TextView) view.findViewById(R.id.txt_data));
+                dataTextView = (TextView) view.findViewById(R.id.txt_data);
             }
         }
     }

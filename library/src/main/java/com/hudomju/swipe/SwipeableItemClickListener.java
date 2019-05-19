@@ -37,6 +37,11 @@ public class SwipeableItemClickListener implements RecyclerView.OnItemTouchListe
     public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {
     }
 
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+    }
+
     private View findChildViewLeaf(View childView, MotionEvent e) {
         float x = e.getX();
         float y = e.getY();
@@ -44,7 +49,7 @@ public class SwipeableItemClickListener implements RecyclerView.OnItemTouchListe
         while (childView instanceof ViewGroup && v != null) {
             x -= childView.getLeft();
             y -= childView.getTop();
-            v = findChildViewUnder(((ViewGroup) childView), x, y);
+            v = findChildViewUnder((ViewGroup) childView, x, y);
             if (v != null) {
                 childView = v;
             }

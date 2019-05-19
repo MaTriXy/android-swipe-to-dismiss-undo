@@ -22,6 +22,8 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class ListViewActivity extends Activity {
 
+    private static final int TIME_TO_AUTOMATICALLY_DISMISS_ITEM = 3000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +44,17 @@ public class ListViewActivity extends Activity {
                             }
 
                             @Override
+                            public void onPendingDismiss(ListViewAdapter recyclerView, int position) {
+
+                            }
+
+                            @Override
                             public void onDismiss(ListViewAdapter view, int position) {
                                 adapter.remove(position);
                             }
                         });
+
+        touchListener.setDismissDelay(TIME_TO_AUTOMATICALLY_DISMISS_ITEM);
         listView.setOnTouchListener(touchListener);
         // Setting this scroll listener is required to ensure that during ListView scrolling,
         // we don't look for swipes.
@@ -96,7 +105,7 @@ public class ListViewActivity extends Activity {
         static class ViewHolder {
             TextView dataTextView;
             ViewHolder(View view) {
-                dataTextView = ((TextView) view.findViewById(R.id.txt_data));
+                dataTextView = (TextView) view.findViewById(R.id.txt_data);
                 view.setTag(this);
             }
         }
